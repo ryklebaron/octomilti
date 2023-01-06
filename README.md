@@ -12,7 +12,7 @@ ssh-copy-id username@destinationServer
 ```
 ssh-keygen
 ```
-
+```
 bootstrap/bootstrap hostnameOrIpAddress Username
 ```
 > This creates an Ansible user with passworless sudo rights
@@ -38,5 +38,3 @@ Run Ansible with:
 ```
 ansible-playbook site.yml
 ```
-# octomilti
-# octomilti
