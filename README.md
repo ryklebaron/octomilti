@@ -16,6 +16,7 @@ ssh-keygen
 bootstrap/bootstrap hostnameOrIpAddress Username
 ```
 > This creates an Ansible user with passworless sudo rights
+> In the file **octoVars** in the folder **host_vars** I have defined my user on my raspberry pi. Make sure you set yours in that file!!
 
 # Change ip address to your server
 In the **hosts** file, I set the name of the Raspberry Pi and set it's IP Address. Change this to your setup 
