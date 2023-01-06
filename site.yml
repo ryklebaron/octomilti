@@ -1,0 +1,10 @@
+---
+
+
+- hosts: octo
+  become: yes
+  user: ansible
+
+  roles: 
+  #  - {role: ansible-linux-prep,  tags: [ 'prep' ] }
+    - {role: octoprint,           tags: [ 'octo' ] }

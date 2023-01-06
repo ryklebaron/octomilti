@@ -1,0 +1,48 @@
+---
+
+- name: "Update system"
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+- name: "Install packages needed to install docker on Rasbian"
+  apt:
+    name: 
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+      - python3-pip
+    state: present
+
+- name: "Create directory for keyrings (docker official GPG key)"
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: "Add Dockers GPG key"
+  raw: "curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg"
+  #### Note, command the above lines after running this task succesfull. It wont run a second time
+
+- name: "Raw command to import docker gpg key for rasbian"
+  raw: echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && sudo apt update
+  #### Note, command the above lines after running this task succesfull.
+  
+- name: "Installing docker"
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
+
+- name: "Install docker sdk for python"
+  pip:
+    name: docker
+
+- name: "Add pi user to docker group"
+  user:
+    name: pi
+    groups: docker
+
+- import_tasks: octoDocker.yml
